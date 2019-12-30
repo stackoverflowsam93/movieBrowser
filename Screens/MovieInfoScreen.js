@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
     }
 })
 
+var DisplayedAttribute = (props) => {
+    return(
+        <Text style={props.style}><Text style={{fontWeight:'bold'}}>{props.k}</Text>:  {props.value}</Text>
+    )
+}
+
 /**
  * The screen displayed when a movie cell is clicked on. Displays information about the movie
  * @param {object} props.navigation.jsonData: Response object from the OMDB database with key:value pairs that describe attributes about the movie 
@@ -91,9 +97,9 @@ class MovieInfoScreen extends React.Component {
         //For each key,value pair in the response object, create a <Text> component that looks like "key: value" where key is bolded. Add these components to info and sideInfo
         Object.keys(jsonData).forEach((key) => {
             if(this.isSideViewKey(key)){
-                sideInfo.push(this.displayedAttributeComponent(key,jsonData[key],styles.sideSection))
+                sideInfo.push([key,jsonData[key]])
             }else if (this.isDisplayedAttribute(key)){
-                info.push(this.displayedAttributeComponent(key,jsonData[key], styles.bottomSection))
+                info.push([key,jsonData[key]])
             }
         })
         return (
@@ -102,14 +108,14 @@ class MovieInfoScreen extends React.Component {
                 <View style={styles.header}>
                     <Image style={styles.poster} source={{uri: jsonData['Poster']}}></Image>
                     <View style={styles.sideInfo}>
-                        {sideInfo.map(text => text)}
+                        {sideInfo.map(cell => <DisplayedAttribute key={cell[0]} k={cell[0]} value={cell[1]} style={styles.sideSection} /> )}
                     </View>
                 </View>
                 <View style={styles.bottomInfo}>
-                    {info.map(text => <Text style={styles.bottomSection}>{text}</Text>)}
+                    {info.map(cell => <DisplayedAttribute key={cell[0]} k={cell[0]} value={cell[1]} style={styles.bottomSection}/>)}
                         <Text style={styles.ratingsTitle}>Ratings</Text>
                         <View style={styles.ratings}>
-                            {ratings.map(rating => <Text style={styles.rating}>{rating}</Text>)}
+                            {ratings.map(rating => <Text key={rating} style={styles.rating}>{rating}</Text>)}
                         </View>
                 </View>
             </ScrollView>

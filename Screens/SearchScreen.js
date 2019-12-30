@@ -4,10 +4,10 @@ import {fetchRequest} from '../fetchRequest.js'
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#C8FEFE',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex:1,
+        backgroundColor: '#C8FEFE',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     searchButton: {
       marginTop: 20,
